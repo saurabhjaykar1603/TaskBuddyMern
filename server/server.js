@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { connectDB } from "./config/db.js";
+import userRouter from "./routes/userRoute.js";
 
 dotenv.config();
 const app = express();
@@ -16,6 +17,10 @@ app.use(express.urlencoded({ extended: true }));
 // Connect to MongoDB
 
 connectDB()
+
+// Routes
+app.use("/api/v1/users", userRouter);
+
 
 app.get('/', (req, res) => {
     res.send("Hello World");
