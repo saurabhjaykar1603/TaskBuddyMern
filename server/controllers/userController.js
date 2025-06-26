@@ -113,3 +113,41 @@ export async function getCurrentUser(req, res) {
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 }
+
+// Update user profile
+
+export async function updateUserProfile(req, res) {
+  const { name, email } = req.body;
+  if (!name || !email || !validator.isEmail(email)) {
+    return res.status(400).json({
+      success: false,
+      message: "Name and email are required",
+    });
+  }
+
+  try {
+    const existingUser = await User.findOne({
+      email,
+      _id: { $ne: req.user._id },
+    });
+    if (existingUser) {
+      return res.status(409).json({
+        success: false,
+        message: "Email already in use by another user",
+      });
+    }
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      { name, email },
+      { new: true, runValidators: true }
+    ).select("-password");
+    res.status(200).json({
+      success: true,
+      message: "User profile updated successfully",
+      user,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+}
