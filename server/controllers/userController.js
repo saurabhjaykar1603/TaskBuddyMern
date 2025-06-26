@@ -55,6 +55,7 @@ export async function registerUser(req, res) {
   }
 }
 
+// Login a user
 export async function loginUser(req, res) {
   const { email, password } = req.body;
   if (!email || !password) {
@@ -86,6 +87,26 @@ export async function loginUser(req, res) {
         name: user.name,
         email: user.email,
       },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+}
+
+// Get current user
+export async function getCurrentUser(req, res) {
+  try {
+    const user = await User.findById(req.user._id).select("-password");
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      user,
     });
   } catch (error) {
     console.log(error);
