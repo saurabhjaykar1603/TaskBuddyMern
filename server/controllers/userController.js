@@ -2,10 +2,14 @@ import User from "../models/userModel.js";
 import validator from "validator";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 // Register a new user
 const JWT_SECRET = process.env.JWT_SECRET;
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN;
+const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN
+
 const createToken = (userId) => {
   return jwt.sign({ userId }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
 };
@@ -18,7 +22,7 @@ export async function registerUser(req, res) {
       message: "All fields are required name, email, password",
     });
   }
-  if (validator.isEmail(email)) {
+  if (!validator.isEmail(email)) {
     return res.status(400).json({ success: false, message: "Invalid email" });
   }
 
@@ -187,8 +191,5 @@ export async function updatePassword(req, res) {
       success: true,
       message: "Password updated successfully",
     });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ success: false, message: "Internal server error" });
-  }
+  } catch (error) {}
 }
