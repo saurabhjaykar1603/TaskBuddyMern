@@ -80,7 +80,6 @@ export const getTaskById = async (req, res) => {
   }
 };
 
-
 // Update task by ID (only if owned by logged-in user)
 export const updateTaskById = async (req, res) => {
   try {
@@ -124,3 +123,28 @@ export const updateTaskById = async (req, res) => {
   }
 };
 
+// Delete task by ID (only if owned by logged-in user)
+
+  export const deleteTaskById = async (req, res) => {
+    try {
+      const task = await Task.findOneAndDelete({
+        _id: req.params.id,
+        owner: req.user._id,
+      });
+      if (!task) {
+        return res.status(404).json({
+          success: false,
+          message: "Task not found or unauthorized",
+        });
+      }
+      res.status(200).json({
+        success: true,
+        message: "Task deleted successfully",
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  };
