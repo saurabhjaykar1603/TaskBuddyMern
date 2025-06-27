@@ -46,3 +46,36 @@ export const getTasks = async (req, res) => {
     });
   }
 };
+
+// Get a single task by id (must be logged in user)
+
+export const getTaskById = async (req, res) => {
+  try {
+    const task = await Task.findOne({
+      _id: req.params.id,
+      owner: req.user._id,
+    });
+    if (!task) {
+      return res.status(404).json({
+        success: false,
+        message: "Task not found",
+      });
+    }
+    if (task.owner.toString() !== req.user._id.toString()) {
+      return res.status(403).json({
+        success: false,
+        message: "Unauthorized access",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Task fetched successfully",
+      task,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
