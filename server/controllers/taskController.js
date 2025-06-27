@@ -26,3 +26,23 @@ export const createTask = async (req, res) => {
     });
   }
 };
+
+// Get all tasks for logged in user
+
+export const getTasks = async (req, res) => {
+  try {
+    const tasks = await Task.find({ owner: req.user._id }).sort({
+      createdAt: -1,
+    });
+    res.status(200).json({
+      success: true,
+      message: "Tasks fetched successfully",
+      tasks,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
