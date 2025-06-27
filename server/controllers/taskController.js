@@ -79,3 +79,48 @@ export const getTaskById = async (req, res) => {
     });
   }
 };
+
+
+// Update task by ID (only if owned by logged-in user)
+export const updateTaskById = async (req, res) => {
+  try {
+    // Disallow updating protected fields
+    const { title, description, priority, dueDate, completed } = req.body;
+
+    const updates = {
+      ...(title && { title }),
+      ...(description && { description }),
+      ...(priority && { priority }),
+      ...(dueDate && { dueDate }),
+    };
+
+    if (completed !== undefined) {
+      updates.completed = completed === "Yes" || completed === true;
+    }
+
+    const task = await Task.findOneAndUpdate(
+      { _id: req.params.id, owner: req.user._id },
+      updates,
+      { new: true, runValidators: true }
+    );
+
+    if (!task) {
+      return res.status(404).json({
+        success: false,
+        message: "Task not found or unauthorized",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Task updated successfully",
+      task,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
