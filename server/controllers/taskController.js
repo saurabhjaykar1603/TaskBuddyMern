@@ -3,8 +3,16 @@ import Task from "../models/taskModel.js";
 // Create a new task
 
 export const createTask = async (req, res) => {
+  const { title, description, priority, dueDate, completed } = req.body;
+
+  if (!title) {
+    return res.status(400).json({
+      success: false,
+      message: "Title is required",
+    });
+  }
+
   try {
-    const { title, description, priority, dueDate, completed } = req.body;
     const task = new Task({
       title,
       description,
@@ -13,13 +21,16 @@ export const createTask = async (req, res) => {
       completed: completed === "Yes" || completed === true,
       owner: req.user._id,
     });
+
     const savedTask = await task.save();
+
     res.status(201).json({
       success: true,
       message: "Task created successfully",
       task: savedTask,
     });
   } catch (error) {
+    console.log(error);
     res.status(400).json({
       success: false,
       message: error.message,
@@ -125,26 +136,26 @@ export const updateTaskById = async (req, res) => {
 
 // Delete task by ID (only if owned by logged-in user)
 
-  export const deleteTaskById = async (req, res) => {
-    try {
-      const task = await Task.findOneAndDelete({
-        _id: req.params.id,
-        owner: req.user._id,
-      });
-      if (!task) {
-        return res.status(404).json({
-          success: false,
-          message: "Task not found or unauthorized",
-        });
-      }
-      res.status(200).json({
-        success: true,
-        message: "Task deleted successfully",
-      });
-    } catch (error) {
-      res.status(500).json({
+export const deleteTaskById = async (req, res) => {
+  try {
+    const task = await Task.findOneAndDelete({
+      _id: req.params.id,
+      owner: req.user._id,
+    });
+    if (!task) {
+      return res.status(404).json({
         success: false,
-        message: error.message,
+        message: "Task not found or unauthorized",
       });
     }
-  };
+    res.status(200).json({
+      success: true,
+      message: "Task deleted successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
