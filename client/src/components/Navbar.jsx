@@ -2,14 +2,11 @@ import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronDown, LogOut, Settings, Zap } from "lucide-react";
 
-function Navbar() {
+function Navbar({ user, onLogout }) {
   const navigate = useNavigate();
   const menuRef = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const User = {
-    name: "John Doe",
-    // avatar: "https://via.placeholder.com/150",
-  };
+  const User = user
 
   const handleToggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -19,7 +16,7 @@ function Navbar() {
     setIsMenuOpen(false);
     localStorage.removeItem("token");
     navigate("/login");
-
+    onLogout();
   };
 
   return (
@@ -64,16 +61,16 @@ function Navbar() {
                     />
                   ) : (
                     <div className="w-8 h-8 flex items-center justify-center rounded-full bg-gradient-to-br from-fuchsia-500 to-purple-600 text-white font-semibold shadow-md">
-                      {User.name.charAt(0) || "U"}
+                      {User?.name.charAt(0) || "U"}
                     </div>
                   )}
                   <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-400 rounded-full border-2 border-white animate-pulse " />
                 </div>
                 <div className="text-left hidden md:block">
                   <p className="text-sm font-medium text-gray-700">
-                    {User.name}
+                    {User?.name}
                   </p>
-                  <p className="text-xs text-gray-500">{User.email}</p>
+                  <p className="text-xs text-gray-500">{User?.email}</p>
                 </div>
                 <ChevronDown
                   className={`w-4 h-4 text-gray-500 transition-transform duration-300 ${
