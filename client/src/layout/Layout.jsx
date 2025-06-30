@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Navbar from "../components/Navbar";
 import {
-  TrendingUp ,
+  TrendingUp,
   CheckCircle,
   Clock,
   Percent,
@@ -26,7 +26,7 @@ function Layout({ user = {}, onLogout }) {
       }
 
       const { data } = await axios.get(
-        "http://localhost:5173/api/v1/tasks/get",
+        `${import.meta.env.VITE_API_URL}/api/v1/tasks/get`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -36,10 +36,10 @@ function Layout({ user = {}, onLogout }) {
       const arr = Array.isArray(data)
         ? data
         : Array.from(data.tasks)
-        ? data.tasks
-        : Array.isArray(data.data)
-        ? data.data
-        : [];
+          ? data.tasks
+          : Array.isArray(data.data)
+            ? data.data
+            : [];
       setTasks(arr);
       setLoading(false);
     } catch (error) {
@@ -132,7 +132,7 @@ function Layout({ user = {}, onLogout }) {
           <div className="xl:col-span-1 space-y-4 sm:space-y-6 ">
             <div className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-purple-100">
               <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-gray-800 flex items-center gap-2">
-                <TrendingUp  className="w-4 h-4 sm:w-5 sm:h-5 text-purple-500" />
+                <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-purple-500" />
                 Task Statistics
               </h3>
               <div className="grid grid-cols-1 gap-3 sm:gap-4 sm:mb-6">
@@ -208,11 +208,10 @@ function Layout({ user = {}, onLogout }) {
                       </p>
                     </div>
                     <span
-                      className={`px-2 py-1 text-xs rounded-full shrink-0 ml-2 ${
-                        task?.completed
+                      className={`px-2 py-1 text-xs rounded-full shrink-0 ml-2 ${task?.completed
                           ? "bg-green-100 text-green-700"
                           : "bg-fuchsia-100 text-fuchsia-700"
-                      }`}
+                        }`}
                     >
                       {task?.completed ? "Done" : "Pending"}
                     </span>

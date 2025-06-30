@@ -11,14 +11,14 @@ function App() {
     const token = localStorage.getItem("currentUser");
     return token ? JSON.parse(token) : null;
   });
-  // useEffect(() => {
-  //   if (currentUser) {
-  //     localStorage.setItem("currentUser", JSON.stringify(currentUser));
-  //   } else {
-  //     localStorage.removeItem("currentUser");
-  //     navigate("/login");
-  //   }
-  // }, [currentUser]);
+  useEffect(() => {
+    if (currentUser) {
+      localStorage.setItem("currentUser", JSON.stringify(currentUser));
+    } else {
+      localStorage.removeItem("currentUser");
+      navigate("/login");
+    }
+  }, [currentUser]);
 
   const handleAuthSubmit = (data) => {
     const user = {
@@ -61,7 +61,7 @@ function App() {
       />
 
 <Route
-        path="/login"
+        path="/signup"
         element={
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
             <SignUp
