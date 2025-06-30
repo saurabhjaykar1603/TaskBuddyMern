@@ -55,13 +55,13 @@ function Navbar({ user, onLogout }) {
                 <div className="relative">
                   {User?.avatar ? (
                     <img
-                      src={User.avatar}
+                      src={User?.avatar}
                       alt="User Avatar"
                       className="w-9 h-9 rounded-full shadow-sm"
                     />
                   ) : (
                     <div className="w-8 h-8 flex items-center justify-center rounded-full bg-gradient-to-br from-fuchsia-500 to-purple-600 text-white font-semibold shadow-md">
-                      {User?.name.charAt(0) || "U"}
+                      {User?.name?.charAt(0) || "U"}
                     </div>
                   )}
                   <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-400 rounded-full border-2 border-white animate-pulse " />
