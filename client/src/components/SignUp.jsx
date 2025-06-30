@@ -21,15 +21,20 @@ function SignUp({ onSwitchMode }) {
     type: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage({ text: "", type: "" });
+  
     try {
-      const data = axios.post(`${import.meta.env.VITE_API_URL}/api/v1/users/register`, formData);
-      console.log("success", data);
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/v1/users/register`,
+        formData
+      );
+  
+      console.log("success", response.data);
       setMessage({
-        text: "Registration SuccessFull!  You can now login",
+        text: "Registration successful! You can now login.",
         type: "success",
       });
       setFormData(INITIAL_FORM);
@@ -38,13 +43,14 @@ function SignUp({ onSwitchMode }) {
       setMessage({
         text:
           error.response?.data?.message ||
-          "An error occurred. Please try again",
+          "An error occurred. Please try again.",
         type: "error",
       });
     } finally {
       setLoading(false);
     }
   };
+  
 
   return (
     <div className="max-w-md w-full bg-white  shadow-lg  border border-purple-100 rounded-xl p-8">
