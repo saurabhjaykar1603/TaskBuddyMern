@@ -6,6 +6,7 @@ import SignUp from "./components/SignUp";
 import Layout from "./layout/Layout";
 import PendingPage from "./pages/PendingPage";
 import CompletedPage from "./pages/CompletedPage";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   const navigate = useNavigate();
@@ -83,6 +84,7 @@ function App() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/pending" element={<PendingPage />} />
         <Route path="/complete" element={<CompletedPage />} />
+        <Route path="/profile" element={<ProfilePage user={currentUser} setCurrentUser={setCurrentUser} onLogout={handleLogout}/>} />
       </Route>
       <Route
         path="*"
