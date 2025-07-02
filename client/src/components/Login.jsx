@@ -67,7 +67,6 @@ function Login({ onSubmit, onSwitchMode }) {
       if (!data.token) {
         throw new Error(data.message || "Login failed");
       }
-console.log(data);
 
       localStorage.setItem("token", data.token);
       localStorage.setItem("userId", data?.user?.id);
@@ -81,9 +80,8 @@ console.log(data);
       });
       toast.success("Login Successful");
 
-      setTimeout(() => {
-        navigate("/");
-      }, 1000);
+      
+        window.location.href = "/";
     } catch (error) {
       console?.error("Login error:", error);
       toast.error(
