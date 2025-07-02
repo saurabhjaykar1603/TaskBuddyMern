@@ -3,13 +3,22 @@ import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import {
   BACK_BUTTON,
+  DANGER_BTN,
   FULL_BUTTON,
   INPUT_WRAPPER,
   Inputwrapper,
   personalFields,
   SECTION_WRAPPER,
+  securityFields,
 } from "../assets/dummy";
-import { ChevronLeft, Save, UserCircle } from "lucide-react";
+import {
+  ChevronLeft,
+  Lock,
+  LogOut,
+  Save,
+  Shield,
+  UserCircle,
+} from "lucide-react";
 import axios from "axios";
 
 function ProfilePage({ user, setCurrentUser, onLogout }) {
@@ -68,7 +77,6 @@ function ProfilePage({ user, setCurrentUser, onLogout }) {
         }
       );
       if (data.success) {
-        
         setCurrentUser((prev) => ({
           ...prev,
           name: data.user.name,
@@ -81,6 +89,34 @@ function ProfilePage({ user, setCurrentUser, onLogout }) {
       } else {
         toast.error(data.message);
       }
+    } catch (error) {
+      toast.error(error.response.data.message || "Something went wrong");
+    }
+  };
+
+  const savePassword = async (e) => {
+    e.preventDefault();
+    if (password.new !== password.confirm) {
+      toast.error("Passwords do not match");
+      return;
+    } try {
+        const token = localStorage.getItem("token");
+        const {data} = await axios.put(`${API_URL}/api/v1/users/update-password`,{
+            currentPassword: password.current,
+            newPassword: password.new,
+        },{
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        if(data.success){
+            toast.success("Password updated successfully");
+            setPassword({
+                current: "",
+                new: "",
+                confirm: "",
+            });
+        }
     } catch (error) {
       toast.error(error.response.data.message || "Something went wrong");
     }
@@ -139,6 +175,42 @@ function ProfilePage({ user, setCurrentUser, onLogout }) {
                 <Save className="w-5 h-5 mr-2" />
                 Save Changes
               </button>
+            </form>
+          </section>
+          <section className={SECTION_WRAPPER}>
+            <div className="flex items-center gap-2 mb-6">
+              <Shield className="w-5 h-5 text-purple-600" />
+              <h2 className="text-lg font-semibold text-gray-800">Security</h2>
+            </div>
+            <form onSubmit={savePassword} className="space-y-4">
+              {securityFields.map(({ name, placeholder }) => (
+                <div key={name} className={INPUT_WRAPPER}>
+                  <Lock className="text-purple-500 w-5 h-5 mr-2" />
+                  <input
+                    type="password"
+                    placeholder={placeholder}
+                    value={password[name]}
+                    onChange={(e) =>
+                      setPassword({ ...password, [name]: e.target.value })
+                    }
+                    className="w-full focus:outline-none text-sm text-gray-700"
+                    required
+                  />
+                </div>
+              ))}
+              <button type="submit" className={FULL_BUTTON}>
+                <Shield className="w-5 h-5 mr-2" />
+                Change Password
+              </button>
+              <div className="mt-8 pt-6 border-t border-purple-100 cursor-pointer">
+                <h3 className="font-semibold text-red-600 mb-4 flex items-center gap-2">
+                  <LogOut className="w-5 h-5 mr-2" />
+                  Danger Zone
+                </h3>
+                <button onClick={onLogout} className={DANGER_BTN}>
+                  Logout
+                </button>
+              </div>
             </form>
           </section>
         </div>
