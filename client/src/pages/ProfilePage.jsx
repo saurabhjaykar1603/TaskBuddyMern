@@ -74,7 +74,7 @@ function ProfilePage({ user, setCurrentUser, onLogout }) {
           name: data.user.name,
           email: data.user.email,
           avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(
-            data.name || "User"
+            data.user.name || "User"
           )}&background=random`,
         }));
         toast.success("Profile updated successfully");
