@@ -46,7 +46,7 @@ function Sidebar({ user, tasks }) {
               <span
                 className={`${
                   isMobile ? "block" : "hidden lg:block"
-                } ${LINK_CLASSES}`}
+                } ${LINK_CLASSES.text}`}
               >
                 {text}
               </span>

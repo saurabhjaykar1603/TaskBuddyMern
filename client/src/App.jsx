@@ -4,6 +4,8 @@ import { Navigate, Outlet, Route, Routes, useNavigate } from "react-router-dom";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Layout from "./layout/Layout";
+import PendingPage from "./pages/PendingPage";
+import CompletedPage from "./pages/CompletedPage";
 
 function App() {
   const navigate = useNavigate();
@@ -79,6 +81,8 @@ function App() {
         }
       >
         <Route path="/" element={<Dashboard />} />
+        <Route path="/pending" element={<PendingPage />} />
+        <Route path="/complete" element={<CompletedPage />} />
       </Route>
       <Route
         path="*"
