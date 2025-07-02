@@ -27,7 +27,19 @@ export default async function authMiddleware(req, res, next) {
     req.user = user;
     next();
   } catch (error) {
-    console.log(error, "error in auth middleware");
+    if (error instanceof jwt.TokenExpiredError) {
+      return res.status(401).json({
+        success: false,
+        message: "Token expired. Please login again.",
+      });
+    }
+    if (error instanceof jwt.JsonWebTokenError) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid token. Please login again.",
+      });
+    }
+    console.error("Auth middleware error:", error);
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 }
