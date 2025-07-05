@@ -1,5 +1,5 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
-import Navbar from "../components/Navbar";
 import {
   ADD_BUTTON,
   EMPTY_STATE,
@@ -20,12 +20,13 @@ import {
   VALUE_CLASS,
   WRAPPER,
 } from "../assets/dummy";
-import { Calendar, FileIcon, FilterIcon, HomeIcon, Plus } from "lucide-react";
+import { Calendar, FilterIcon, HomeIcon, Plus } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import TaskItem from "../components/TaskItem";
 import axios from "axios";
 import { toast } from "react-toastify";
+import TaskModal from "../components/TaskModal";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -33,7 +34,7 @@ function Dashboard() {
   const { tasks, refreshTasks } = useOutletContext();
   const [showModal, setShowModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
-
+  const navigate = useNavigate();
   const [filter, setFilter] = useState("all");
   const stats = useMemo(
     () => ({
@@ -87,12 +88,12 @@ function Dashboard() {
     async (taskData) => {
       try {
         if (taskData?._id) {
-          await axios.put(`${API_URL}/task/update/${taskData._id}`, taskData);
+          await axios.put(`${API_URL}/api/v1/tasks/update/${taskData._id}`, taskData);
           refreshTasks();
           setShowModal(false);
           setSelectedTask(null);
         } else {
-          await axios.post(`${API_URL}/task/create`, taskData);
+          await axios.post(`${API_URL}/api/v1/tasks/create`, taskData);
           refreshTasks();
           setShowModal(false);
           setSelectedTask(null);
@@ -106,6 +107,13 @@ function Dashboard() {
     [refreshTasks]
   );
 
+  // logout
+  const handleLogout = useCallback(() => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  }, [navigate]);
+
+  
   return (
     <div className={WRAPPER}>
       {/* HEADER */}
@@ -231,9 +239,29 @@ function Dashboard() {
             ))
           )}
         </div>
+        {/* Add Task Desktop */}
+        <div
+          onClick={() => setShowModal(true)}
+          className=" hidden md:flex items-center justify-center p-4 border-2 border-dashed border-purple-100 rounded-xl hover:border-purple-400 bg-purple-50/50 cursor-pointer transition-colors"
+        >
+          <Plus size={24} className="h-5 w-5text-purple-600 mr-2" />
+          <span className="text-gray-600 font-medium">Add New Task</span>
+        </div>
       </div>
+      {/* Modal */}
+      <TaskModal
+        isOpen={showModal || !!selectedTask}
+        onClose={() => {
+          setShowModal(false);
+          setSelectedTask(null);
+        }}
+        taskToEdit={selectedTask}
+        onSave={handleSaveTask}
+        onLogout={handleLogout}
+      />
     </div>
   );
 }
 
 export default Dashboard;
+
