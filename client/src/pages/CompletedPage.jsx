@@ -5,7 +5,7 @@ import { CalendarCheck, Check, CheckCircle, Filter } from "lucide-react";
 import TaskItem from "../components/TaskItem";
 
 export default function CompletedPage() {
-  const { tasks = [], refreshTasks } = useOutletContext();
+  const { tasks = [], refetchTasks } = useOutletContext();
   const [sortBy, setSortBy] = useState("newest");
 
   const sortedCompletedTasks = useMemo(() => {
@@ -117,7 +117,7 @@ export default function CompletedPage() {
             <TaskItem
               key={task.id || task._id}
               task={task}
-              onRefresh={refreshTasks}
+              onRefresh={refetchTasks}
               showCompleteCheckbox={false}
               className="opacity-90 hover:opacity-100 transition-opacity text-sm md:text-base"
             />

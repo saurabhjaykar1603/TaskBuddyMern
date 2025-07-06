@@ -7,7 +7,7 @@ import TaskModal from "../components/TaskModal";
 
 
 function PendingPage() {
-  const { tasks = [], refreshTasks } = useOutletContext();
+  const { tasks = [], refetchTasks } = useOutletContext();
 
   const [sortBy, setSortBy] = useState("newest");
   const [selectedTasks, setSelectedTasks] = useState(null);
@@ -142,7 +142,7 @@ function PendingPage() {
                   setSelectedTasks(task);
                   setShowModal(true);
                 }}
-                onRefresh={refreshTasks}
+                onRefresh={refetchTasks}
               />
             ))}
           </>
@@ -153,7 +153,7 @@ function PendingPage() {
         onClose={() => {
           setSelectedTasks(null);
           setShowModal(false);
-          refreshTasks();
+          refetchTasks();
         }}
         taskToEdit={selectedTasks}
       />

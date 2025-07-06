@@ -31,7 +31,7 @@ import TaskModal from "../components/TaskModal";
 const API_URL = import.meta.env.VITE_API_URL;
 
 function Dashboard() {
-  const { tasks, refreshTasks } = useOutletContext();
+  const { tasks, refetchTasks } = useOutletContext();
   const [showModal, setShowModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
   const navigate = useNavigate();
@@ -89,12 +89,12 @@ function Dashboard() {
       try {
         if (taskData?._id) {
           // await axios.put(`${API_URL}/api/v1/tasks/update/${taskData._id}`, taskData);
-          refreshTasks();
+          refetchTasks();
           setShowModal(false);
           setSelectedTask(null);
         } else {
           // await axios.post(`${API_URL}/api/v1/tasks/create`, taskData);
-          refreshTasks();
+          refetchTasks();
           setShowModal(false);
           setSelectedTask(null);
         }
@@ -104,7 +104,7 @@ function Dashboard() {
         toast.error("Failed to save task");
       }
     },
-    [refreshTasks]
+    [refetchTasks]
   );
 
   // logout
@@ -229,7 +229,7 @@ function Dashboard() {
               <TaskItem
                 key={task?._id || task?.id}
                 task={task}
-                onRefresh={refreshTasks}
+                onRefresh={refetchTasks}
                 showCompleteCheckbox={true}
                 onEdit={() => {
                   setShowModal(true);
