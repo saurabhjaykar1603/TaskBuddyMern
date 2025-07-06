@@ -25,7 +25,7 @@ app.use("/api/v1/tasks", taskRouter);
 
 
 app.get('/', (req, res) => {
-    res.send("Hello World");
+    res.send("Server is running successfully, API is ready to use");
 });
 
 app.listen(port, () => {
