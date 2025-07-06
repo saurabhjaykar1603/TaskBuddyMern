@@ -10,7 +10,6 @@ import { Lightbulb, Menu, Sparkles, X } from "lucide-react";
 import { NavLink } from "react-router-dom";
 function Sidebar({ user, tasks }) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [showModal, setShowModal] = useState(false);
 
   const totalTasks = tasks.length || 0;
   const completedTasks = tasks.filter((task) => task.completed).length || 0;
@@ -84,7 +83,7 @@ function Sidebar({ user, tasks }) {
             </div>
             <div className={PRODUCTIVITY_CARD.barBg}>
               <div
-                className={PRODUCTIVITY_CARD.bar}
+                className={PRODUCTIVITY_CARD.barFg}
                 style={{ width: `${productivity}%` }}
               />
             </div>
