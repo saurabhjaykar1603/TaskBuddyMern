@@ -108,7 +108,6 @@ function Login({ onSubmit, onSwitchMode }) {
   ];
   return (
     <div className="max-w-md bg-white w-full shadow-lg border border-purple-50 rounded-xl p-8">
-      <ToastContainer position="top-center " autoClose={3000} hideProgressBar />
       <div className="mb-6 text-center">
         <div className="w-16 h-16 bg-gradient-to-br from-fuchsia-50-500 to-purple-600 rounded-full mx-auto flex items-center justify-center mb-4">
           <LogIn className="w-8 h-8 text-white" />

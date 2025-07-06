@@ -57,7 +57,6 @@ function TaskItem({
   const handleComplete = async () => {
     const newStatus = isCompleted ? "No" : "Yes";
     try {
-      console.log(task);
       await axios.put(
         `${API_URL}/api/v1/tasks/update/${task?._id}`,
         { completed: newStatus },

@@ -14,6 +14,7 @@ import {
   Save,
   X,
 } from "lucide-react";
+import { toast, ToastContainer } from "react-toastify";
 
 //API URL
 const API_URL = import.meta.env.VITE_API_URL;
@@ -66,7 +67,6 @@ function TaskModal({ isOpen, onClose, onSave, taskToEdit, onLogout }) {
 
   const handleSubmit = useCallback(
     async (e) => {
-      console.log(taskData);
       e.preventDefault();
       if (taskData.dueDate < today) {
         setError("Due date cannot be in the past");
@@ -86,6 +86,12 @@ function TaskModal({ isOpen, onClose, onSave, taskToEdit, onLogout }) {
           headers: getHeaders(),
           body: JSON.stringify(taskData),
         });
+        if (response.status === 200 && isEdit === false) {
+          toast.success("Task created successfully");
+        }
+        if (response.status === 200 && isEdit === true) {
+          toast.success("Task updated successfully");
+        }
         if (!response.ok) {
           if (response.status === 401) {
             onLogout?.();
@@ -110,6 +116,7 @@ function TaskModal({ isOpen, onClose, onSave, taskToEdit, onLogout }) {
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 backdrop-blur-sm z-50 bg-black/50 flex items-center justify-center p-4">
+
       <div className="bg-white rounded-xl border border-purple-100 max-w-md w-full shadow-lg p-6 relative animate-fade-in">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
