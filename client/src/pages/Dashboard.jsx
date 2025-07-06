@@ -227,7 +227,7 @@ function Dashboard() {
           ) : (
             filteredTasks?.map((task) => (
               <TaskItem
-                key={task._id || task.id}
+                key={task?._id || task?.id}
                 tasks={tasks}
                 onRefresh={refreshTasks}
                 showCompleteCheckbox={true}
