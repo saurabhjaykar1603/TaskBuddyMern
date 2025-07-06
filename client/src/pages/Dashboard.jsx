@@ -88,12 +88,12 @@ function Dashboard() {
     async (taskData) => {
       try {
         if (taskData?._id) {
-          await axios.put(`${API_URL}/api/v1/tasks/update/${taskData._id}`, taskData);
+          // await axios.put(`${API_URL}/api/v1/tasks/update/${taskData._id}`, taskData);
           refreshTasks();
           setShowModal(false);
           setSelectedTask(null);
         } else {
-          await axios.post(`${API_URL}/api/v1/tasks/create`, taskData);
+          // await axios.post(`${API_URL}/api/v1/tasks/create`, taskData);
           refreshTasks();
           setShowModal(false);
           setSelectedTask(null);

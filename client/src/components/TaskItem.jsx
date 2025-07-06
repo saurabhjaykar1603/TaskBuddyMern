@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import {
   getPriorityBadgeColor,
@@ -5,9 +6,11 @@ import {
   MENU_OPTIONS,
   TI_CLASSES,
 } from "../assets/dummy";
-import { CheckCircle2, MoveVertical } from "lucide-react";
+import { Calendar, CheckCircle2, Clock, MoveVertical } from "lucide-react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { format, isToday } from "date-fns";
+import TaskModal from "./TaskModal";
 const API_URL = import.meta.env.VITE_API_URL;
 
 function TaskItem({
@@ -73,8 +76,8 @@ function TaskItem({
   const progress =
     subtasks.length > 0
       ? (subtasks.filter((subtask) => subtask.completed).length /
-          subtasks.length) *
-        100
+        subtasks.length) *
+      100
       : 0;
 
   const handleAction = (action) => {
@@ -100,30 +103,60 @@ function TaskItem({
       }
     }
   };
-  return (
+  const handleSave = async (updatedTask) => {
+    try {
+      const payload = (({
+        title,
+        description,
+        priority,
+        dueDate,
+        completed,
+      }) => ({
+        title,
+        description,
+        priority,
+        dueDate,
+        completed,
+      }))(updatedTask);
+
+      // await axios.put(
+      //   `${API_URL}/api/v1/tasks/update/${updatedTask?._id}`,
+      //   payload,
+      //   {
+      //     headers: getAuthHeader(),
+      //   }
+      // );
+      setShowEdit(false);
+      onRefresh?.();
+      toast.success("Task saved successfully");
+    } catch (error) {
+      console.log(error);
+      if (error.response?.status === 401) {
+        onLogout?.();
+      }
+    }
+  };
+  return (<>
     <div className={`${TI_CLASSES.wrapper} ${borderColor}`}>
       <div className={`${TI_CLASSES.leftContainer}`}>
         {showCompleteCheckbox && (
           <button
             onClick={handleComplete}
-            className={`${TI_CLASSES.completeBtn} ${
-              isCompleted ? "text-green-500" : "text-gray-300"
-            }`}
+            className={`${TI_CLASSES.completeBtn} ${isCompleted ? "text-green-500" : "text-gray-300"
+              }`}
           >
             <CheckCircle2
               size={18}
-              className={`${TI_CLASSES.checkboxIconBase} ${
-                isCompleted ? "fill-green-500" : ""
-              } `}
+              className={`${TI_CLASSES.checkboxIconBase} ${isCompleted ? "fill-green-500" : ""
+                } `}
             />
           </button>
         )}
         <div className="flex-1 min-w-0">
           <div className="flex items-baseline gap-2 mb-1 flex-wrap">
             <h1
-              className={`${TI_CLASSES.titleBase} ${
-                isCompleted ? "text-gray-400 line-through" : "text"
-              }`}
+              className={`${TI_CLASSES.titleBase} ${isCompleted ? "text-gray-400 line-through" : "text"
+                }`}
             >
               {task?.title}
             </h1>
@@ -162,8 +195,32 @@ function TaskItem({
             </div>
           )}
         </div>
+        <div>
+          <div className={`${TI_CLASSES.dateRow} ${task.dueDate && isToday(new Date(task.dueDate)) ? "text-fuchsia-600" : "text-gray-500"} mb-1`}>
+            <Calendar className="w-3.5 h-3.5" />
+            {
+              task.dueDate ? isToday(new Date(task.dueDate)) ?  "Today" : format(new Date(task.dueDate), "MMM d, yyyy") : "-"
+            }
+          </div>
+
+          <div className={`${TI_CLASSES.createdRow}`}>
+            <Clock className=" h-3 w-3 sm:w-3.5 sm:h-3.5" />
+         {task.createdAt ? format(new Date(task.createdAt), "MMM d, yyyy") : "-"}
+          </div>
+        </div>
       </div>
     </div>
+    {
+     (
+        <TaskModal
+        isOpen={showEdit}
+        onClose={() => setShowEdit(false)}
+        taskToEdit={task}
+        onSave={handleSave}
+        />
+      )
+    }
+    </>
   );
 }
 

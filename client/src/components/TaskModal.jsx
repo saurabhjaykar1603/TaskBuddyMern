@@ -66,6 +66,7 @@ function TaskModal({ isOpen, onClose, onSave, taskToEdit, onLogout }) {
 
   const handleSubmit = useCallback(
     async (e) => {
+      console.log(taskData);
       e.preventDefault();
       if (taskData.dueDate < today) {
         setError("Due date cannot be in the past");
