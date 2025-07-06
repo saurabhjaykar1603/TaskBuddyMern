@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {UserPlus } from "lucide-react";
 import React, { useState } from "react";
 import axios from "axios";
