@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { layoutClasses, SORT_OPTIONS } from "../assets/dummy";
+import { CT_CLASSES, layoutClasses, SORT_OPTIONS } from "../assets/dummy";
 import { Clock, Filter, ListCheck, Plus } from "lucide-react";
 import { useOutletContext } from "react-router-dom";
 import TaskItem from "../components/TaskItem";
@@ -55,6 +55,10 @@ function PendingPage() {
             {sortedPendingTasks.length !== 1 && "s"} needing your attention
           </p>
         </div>
+
+        <div className={`${CT_CLASSES.sortContainer}`}>
+          <div className={`${CT_CLASSES.sortBox}`}>
+            <div className={`${CT_CLASSES.filterLabel}`}>
         <div className="flex items-center gap-2 text-gray-700 font-medium">
           <Filter className="w-4 h-4 text-purple-500" />
           <span className="text-sm">Sort by :</span>
@@ -81,6 +85,9 @@ function PendingPage() {
               </button>
             ))}
           </div>
+        </div>
+        </div>
+        </div>
         </div>
       </div>
 
