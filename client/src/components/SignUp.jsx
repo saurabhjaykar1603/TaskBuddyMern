@@ -9,6 +9,7 @@ import {
   MESSAGE_ERROR,
   MESSAGE_SUCCESS,
 } from "../assets/dummy";
+import { useNavigate } from "react-router-dom";
 const INITIAL_FORM = {
   name: "",
   email: "",
@@ -21,7 +22,7 @@ function SignUp({ onSwitchMode }) {
     text: "",
     type: "",
   });
-
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -33,7 +34,7 @@ function SignUp({ onSwitchMode }) {
         formData
       );
   
-      console.log("success", response.data);
+    navigate("/login");
       setMessage({
         text: "Registration successful! You can now login.",
         type: "success",
