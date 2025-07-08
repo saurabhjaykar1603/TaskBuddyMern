@@ -66,7 +66,7 @@ function PendingPage() {
             name=""
             id=""
             value={sortBy}
-            className={`${layoutClasses.select}`}
+            className={`${layoutClasses.select} cursor-pointer`}
             onChange={(e) => setSortBy(e.target.value)}
           >
             <option value="newest">Newest first</option>
@@ -78,7 +78,7 @@ function PendingPage() {
             {SORT_OPTIONS.map((option) => (
               <button
                 key={option.id}
-                className={`${layoutClasses.tabButton(sortBy === option.id)} `}
+                className={`${layoutClasses.tabButton(sortBy === option.id)} cursor-pointer`}
                 onClick={() => setSortBy(option.id)}
               >
                 {option.icon} {option.label}
@@ -117,7 +117,7 @@ function PendingPage() {
                 You have no pending tasks at the moment - great job!
               </p>
               <button
-                className={`${layoutClasses.emptyBtn} flex items-center justify-center mx-auto`}
+                className={`${layoutClasses.emptyBtn} flex items-center justify-center mx-auto cursor-pointer`}
                 onClick={() => setShowModal(true)}
               >
                 <Plus className="w-4 h-4 mr-2" />

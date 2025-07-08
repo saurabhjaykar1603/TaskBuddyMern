@@ -66,7 +66,7 @@ export default function CompletedPage() {
               name=""
               id=""
               value={sortBy}
-              className={`${CT_CLASSES.select}`}
+              className={`${CT_CLASSES.select} cursor-pointer`}
               onChange={(e) => setSortBy(e.target.value)}
             >
               {SORT_OPTIONS.map((option) => (
@@ -77,7 +77,7 @@ export default function CompletedPage() {
               ))}
             </select>
             {/* DESKTOP DROPDOWN */}
-            <div className={`${CT_CLASSES.btnGroup}`}>
+            <div className={`${CT_CLASSES.btnGroup} `}>
               {SORT_OPTIONS.map((option) => (
                 <button
                   onClick={() => setSortBy(option.id)}

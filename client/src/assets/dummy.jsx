@@ -76,12 +76,12 @@ export const BUTTON_CLASSES =
 export const INPUT_WRAPPER =
     "flex items-center border border-purple-100 rounded-lg px-3 py-2.5 focus-within:ring-2 focus-within:ring-purple-500 focus-within:border-purple-500 transition-all duration-200"
 export const FULL_BUTTON =
-    "w-full bg-gradient-to-r from-fuchsia-500 to-purple-600 text-white py-2.5 rounded-lg hover:shadow-md transition-all duration-200 flex items-center justify-center gap-2"
+    "w-full bg-gradient-to-r from-fuchsia-500 to-purple-600 text-white py-2.5 rounded-lg hover:shadow-md transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
 export const SECTION_WRAPPER = "bg-white rounded-xl shadow-sm border border-purple-100 p-6"
 export const BACK_BUTTON =
-    "flex items-center text-gray-600 hover:text-purple-600 mb-8 transition-colors duration-200"
+    "flex items-center text-gray-600 hover:text-purple-600 mb-8 transition-colors duration-200 cursor-pointer"
 export const DANGER_BTN =
-    "w-full text-red-600 border border-red-200 py-2.5 rounded-lg hover:bg-red-50 transition-colors duration-200"
+    "w-full text-red-600 border border-red-200 py-2.5 rounded-lg hover:bg-red-50 transition-colors duration-200 cursor-pointer"
 
 export const personalFields = [
     { name: "name", type: "text", placeholder: "Full Name", icon: User },
@@ -170,7 +170,7 @@ export const getPriorityBadgeColor = (priority) => {
 export const WRAPPER = "p-4 md:p-6 min-h-screen overflow-hidden"
 export const HEADER = "flex flex-col md:flex-row justify-between items-start md:items-center mb-4 md:mb-6 gap-3"
 export const ADD_BUTTON =
-    "flex items-center gap-2 bg-gradient-to-r from-fuchsia-500 to-purple-600 text-white px-4 py-2 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 w-full md:w-auto justify-center text-sm md:text-base"
+    "flex items-center gap-2 bg-gradient-to-r from-fuchsia-500 to-purple-600 text-white px-4 py-2 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 w-full md:w-auto justify-center text-sm md:text-base cursor-pointer"
 export const STATS_GRID = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-4 md:mb-6"
 export const STAT_CARD =
     "p-3 md:p-4 rounded-xl bg-white shadow-sm border border-purple-100 hover:shadow-md transition-all duration-300 min-w-0"
@@ -201,7 +201,7 @@ export const FILTER_LABELS = {
 export const EMPTY_STATE = {
     wrapper: "p-6 bg-white rounded-xl shadow-sm border border-purple-100 text-center",
     iconWrapper: "w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4",
-    btn: "px-4 py-2 bg-gradient-to-r from-fuchsia-500 to-purple-600 text-white rounded-lg text-sm font-medium",
+    btn: "px-4 py-2 bg-gradient-to-r from-fuchsia-500 to-purple-600 text-white rounded-lg text-sm font-medium cursor-pointer",
 }
 
 // Filter UI Constants
@@ -233,8 +233,8 @@ export const CT_CLASSES = {
     select: "px-2 py-1 md:px-3 md:py-2 border border-purple-100 rounded-lg focus:ring-2 focus:ring-purple-500 md:hidden text-xs md:text-sm",
     btnGroup: "hidden md:flex space-x-1 bg-purple-50 p-1 rounded-lg ml-2 md:ml-3",
     btnBase: "px-2 py-1 md:px-3 md:py-1.5 rounded-lg text-xs font-medium transition-all duration-200 flex items-center gap-1",
-    btnActive: "bg-white text-purple-700 shadow-sm border border-purple-100",
-    btnInactive: "text-gray-600 hover:text-purple-700 hover:bg-purple-100/50",
+    btnActive: "bg-white text-purple-700 shadow-sm border border-purple-100 cursor-pointer",
+    btnInactive: "text-gray-600 hover:text-purple-700 hover:bg-purple-100/50 cursor-pointer",
     list: "space-y-3 md:space-y-4",
     emptyState: "p-4 md:p-8 bg-white rounded-xl shadow-sm border border-purple-100 text-center",
     emptyIconWrapper: "w-12 h-12 md:w-16 md:h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4",

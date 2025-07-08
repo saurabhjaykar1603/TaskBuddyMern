@@ -54,8 +54,8 @@ function Navbar({ user, onLogout }) {
           {/* NAVIGATION */}
           <div className="flex items-center gap-4">
             <button
-              className="p-4 text-gray-600 hover:text-purple-500 transition-colors duration-300 hover:bg-purple-50 rounded-full"
               onClick={() => navigate("/profile")}
+              className="p-4 text-gray-600 hover:text-purple-500 transition-colors duration-300 hover:bg-purple-50 rounded-full cursor-pointer"
             >
               <Settings className="w-5 h-5" />
             </button>
@@ -98,7 +98,7 @@ function Navbar({ user, onLogout }) {
                 <ul className="absolute top-14  right-0 w-56 bg-white rounded-2xl shadow-xl border border-purple-200 z-50 overflow-hidden  animate-fadeIn">
                   <li className="p-2">
                     <button
-                      className="w-full px-4 py-2.5  text-left  hover:bg-purple-50 text-sm  text-gray-700 transition-colors flex items-center gap-3 group"
+                      className="w-full px-4 py-2.5  text-left  hover:bg-purple-50 text-sm  text-gray-700 transition-colors flex items-center gap-3 group cursor-pointer"
                       role="menuitem"
                       onClick={() => {
                         setIsMenuOpen(false);
@@ -114,7 +114,7 @@ function Navbar({ user, onLogout }) {
                     <button
                       role="menuitem"
                       onClick={handleLogout}
-                    className="w-full px-4 py-2.5  text-left  hover:bg-red-50 text-sm  text-red-700 transition-colors flex items-center gap-3 group">
+                    className="w-full px-4 py-2.5  text-left  hover:bg-red-50 text-sm  text-red-700 transition-colors flex items-center gap-3 group cursor-pointer">
                       <LogOut className="w-4 h-4 text-gray-700" />
                       Logout
                     </button>
