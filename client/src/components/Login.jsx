@@ -183,7 +183,7 @@ function Login({ onSubmit, onSwitchMode }) {
             onClick={handleSwitchMode}
             className="text-purple-600 hover:text-purple-700 hover:underline font-medium transition-colors"
           >
-            Login
+            Sign Up
           </button>
         </p>
       </form>
