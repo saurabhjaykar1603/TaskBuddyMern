@@ -109,7 +109,7 @@ function SignUp({ onSwitchMode }) {
         Already have an account ?{" "}
         <button
           onClick={onSwitchMode}
-          className="text-purple-600 hover:text-purple-700 hover:underline font-medium transition-colors"
+          className="text-purple-600 hover:text-purple-700 hover:underline font-medium transition-colors cursor-pointer"
         >
           Login
         </button>
