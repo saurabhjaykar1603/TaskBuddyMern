@@ -14,6 +14,42 @@ function App() {
     const token = localStorage.getItem("currentUser");
     return token ? JSON.parse(token) : null;
   });
+
+  // Keyboard navigation handler
+  const handleKeyboardShortcuts = (event) => {
+    if (!currentUser) return; // Only work when user is logged in
+    
+    // Check if Alt key is pressed
+    if (event.altKey) {
+      switch (event.key.toLowerCase()) {
+        case 'h': // Alt + H for Home
+          event.preventDefault();
+          navigate('/');
+          break;
+        case 'p': // Alt + P for Pending
+          event.preventDefault();
+          navigate('/pending');
+          break;
+        case 'c': // Alt + C for Completed
+          event.preventDefault();
+          navigate('/complete');
+          break;
+        case 'u': // Alt + U for User Profile
+          event.preventDefault();
+          navigate('/profile');
+          break;
+      }
+    }
+  };
+
+  // Add keyboard event listener
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyboardShortcuts);
+    return () => {
+      window.removeEventListener('keydown', handleKeyboardShortcuts);
+    };
+  }, [currentUser, navigate]);
+
   useEffect(() => {
     if (currentUser) {
       localStorage.setItem("currentUser", JSON.stringify(currentUser));
